@@ -1,0 +1,20 @@
+{% if ecmp == True %}
+set policy-options policy-statement LB then load-balance per-packet
+set routing-options forwarding-table export LB
+set forwarding-options hash-key family inet layer-3
+set forwarding-options hash-key family inet layer-4
+{% endif %}
+{% for policy in policies %}
+{% for term in policy.terms %}
+{% for from in term.froms %}
+set policy-options policy-statement {{ policy.name }} term {{ term.id }} from {{ from.type }} {{ from.data }}
+{% endfor %}
+{% for then in term.thens %}
+{% if then.type != 'terminate' %}
+set policy-options policy-statement {{ policy.name }} term {{ term.id }} then {{ then.type }} {{ then.type_action }} {{ then.data }}
+{% else %}
+set policy-options policy-statement {{ policy.name }} term {{ term.id }} then {{ then.terminating_action }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}

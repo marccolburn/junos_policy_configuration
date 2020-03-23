@@ -1,0 +1,5 @@
+---
+- name: Configure Junos Policies
+  junos_config:
+    src: "{{ lookup('template', 'junos_policy_config.j2').split('\n') }}"
+    comment: Create Junos policies 
