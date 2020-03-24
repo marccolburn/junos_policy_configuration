@@ -22,3 +22,8 @@ set policy-options policy-statement {{ policy.name }} term {{ term.id }} then {{
 {% endfor %}
 {% endfor %}
 {% endif %}
+{% if communities is defined %}
+{% for community in communities %}
+set policy-options community {{ community.name }} members {{ community.id }}
+{% endfor %}
+{% endif %}
