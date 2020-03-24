@@ -23,6 +23,9 @@ Role Variables
       * type_action: String ('add'|'remove')
       * data: String
       * terminating_action: String ('accept'|'reject'|'discard')
+* communities: List
+  * name: String
+  * id: String
 Dependencies
 ------------
 
